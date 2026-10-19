@@ -7,13 +7,16 @@ require_relative '../lib/cpee/similarity/sim_options'
 
 class Similarity < Riddl::Implementation #{{{
   include SimOptions
+  SIM_TYPES = %w(task trace element)
+
   def response
     #get parameters
     begin
       input_cpee1 = @p[0].value.read
       input_cpee2 = @p[1].value.read
-      sim_type = @p[2].value.read
+      sim_type = @p[2].value.read.strip
       threshold = @p[3]&.value&.read
+      raise "unknown sim_type '#{sim_type}', use one of: #{SIM_TYPES.join(', ')}" unless SIM_TYPES.include?(sim_type)
       #doc1 = XML::Smart.string(input_cpee1)
       #doc2 = XML::Smart.string(input_cpee2)
     rescue Exception => e

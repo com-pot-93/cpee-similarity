@@ -121,5 +121,66 @@ module SimOptions
     trace_sim = trace_sim * (1 - control_flow_penalty(doc1,doc2))
     return trace_sim, task_sim
   end
+
+  # matches two lists of elements with the hungarian algorithm, the block returns the pairwise similarity
+  # returns the similarity and the size of the (soft) union, which is used as weight
+  def calculate_element_similarity(felements,lelements,threshold)
+    return 0, 0 if felements.empty? || lelements.empty?
+    orig_sim_matrix = felements.map { |f| lelements.map { |l| yield(f, l) } }
+    sim_matrix = make_square_matrix(orig_sim_matrix)
+    #for reverse hungarian
+    max_val = sim_matrix.flatten.max
+    cost = sim_matrix.map { |row| row.map { |v| max_val - v } }
+    begin
+      hung_output = HungarianAlgorithmC.find_pairings(cost)
+    rescue SystemStackError => e
+      raise "optiomal solution can't be found!!!"
+    end
+
+    sum = 0
+    matched = 0
+    hung_output.to_h.each do |key, val|
+      sim_val = orig_sim_matrix.dig(key, val)
+      if sim_val && sim_val > threshold
+        sum += sim_val
+        matched += 1
+      end
+    end
+
+    sim = sum.to_f/[felements.length,lelements.length].max
+    union = felements.length + lelements.length - matched
+    return sim, union
+  end
+
+  def element_similarity(doc1,doc2,threshold=0.7)
+    threshold = threshold.nil? ? 0.7 : threshold.to_f
+    begin
+      felements = process_model_elements(doc1)
+      lelements = process_model_elements(doc2)
+    rescue Timeout::Error => e
+      raise "Timeout error!!!"
+    end
+
+    sim = {}
+    weight = {}
+    felements.each_key do |category|
+      sim[category], weight[category] = calculate_element_similarity(felements[category],lelements[category],threshold) do |f, l|
+        case category
+          when :task_names, :event_names, :gateway_names then text_similarity(f, l)
+          when :sequence_flows then flow_similarity(f, l)
+          else f == l ? 1.0 : 0.0
+        end
+      end
+    end
+
+    scores = {}
+    scores[:overall] = weighted_score(sim.keys.map { |c| [sim[c], weight[c]] })
+    scores[:tasks_overall] = weighted_score([[sim[:task_names], weight[:task_names]], [sim[:task_types], weight[:task_types]]])
+    scores[:events_overall] = weighted_score([[sim[:event_names], weight[:event_names]], [sim[:event_types], weight[:event_types]]])
+    scores[:gateways_overall] = weighted_score([[sim[:gateway_names], weight[:gateway_names]], [sim[:gateway_types], weight[:gateway_types]]])
+    scores[:flows_overall] = sim[:sequence_flows]
+    scores.merge!(sim)
+    return scores[:overall], scores
+  end
 end
 
