@@ -1,0 +1,115 @@
+<description xmlns="http://cpee.org/ns/description/1.0"
+  xmlns:a="http://cpee.org/ns/annotation/1.0">
+  <loop eid="e1" mode="pre_test" condition="">
+    <call id="a0" endpoint="" a:alt_id="sid-CD9ABA3B-996B-4F9A-A701-7F4C125A91F0">
+      <parameters>
+        <label>Retrieve breached data</label>
+        <method/>
+        <arguments/>
+      </parameters>
+    </call>
+    <call id="a1" endpoint="" a:alt_id="sid-20C5FDD3-8014-432D-8595-CD780D866E38">
+      <parameters>
+        <label>Retrieve breached subjects</label>
+        <method/>
+        <arguments/>
+      </parameters>
+    </call>
+    <_probability>
+      <_probability_min/>
+      <_probability_max/>
+      <_probability_avg/>
+    </_probability>
+    <_annotations>
+      <_logging_behavior>
+        <_iteration/>
+      </_logging_behavior>
+    </_annotations>
+  </loop>
+  <parallel wait="-1" cancel="last" a:alt_id="sid-9FECC45C-033C-4750-9436-4DA0648C4B43">
+    <parallel_branch>
+      <call id="a7" endpoint="" a:alt_id="sid-5E2F853B-87A5-4B76-96E4-EC74EAE1BD8D">
+        <parameters>
+          <label>Data loss limitation</label>
+          <method/>
+          <arguments/>
+        </parameters>
+      </call>
+    </parallel_branch>
+    <parallel_branch>
+      <call id="a3" endpoint="" a:alt_id="sid-0F3D7191-F96A-45A1-B616-EC78A870BACF">
+        <parameters>
+          <label>Notify national authority</label>
+          <method/>
+          <arguments/>
+        </parameters>
+      </call>
+      <call id="a8" endpoint="" a:alt_id="sid-EE741CA5-91A1-40E1-AFEB-76BFE3BDDBF5">
+        <parameters>
+          <label>Evaluate stolen data</label>
+          <method/>
+          <arguments/>
+        </parameters>
+      </call>
+      <choose mode="exclusive" a:alt_id="sid-EB9C4F6A-BFA4-425F-8F40-4B8C3E57F1C5">
+        <alternative condition="">
+          <call id="a20" endpoint="" a:alt_id="sid-79CCF0F8-CF7E-41E3-948F-CB884C73584F">
+            <parameters>
+              <label>Send notification</label>
+              <method/>
+              <arguments/>
+            </parameters>
+          </call>
+        </alternative>
+        <otherwise>
+          <call id="a11" endpoint="" a:alt_id="sid-9962320B-AB92-456F-A35E-23CE68F5D69E">
+            <parameters>
+              <label>Evaluate security standard</label>
+              <method/>
+              <arguments/>
+            </parameters>
+          </call>
+          <choose mode="exclusive" a:alt_id="sid-90392EFF-AD12-45EB-937A-FF9F18C984E3">
+            <alternative condition="">
+              <call id="a19" endpoint="" a:alt_id="sid-79CCF0F8-CF7E-41E3-948F-CB884C73584F">
+                <parameters>
+                  <label>Send notification</label>
+                  <method/>
+                  <arguments/>
+                </parameters>
+              </call>
+            </alternative>
+            <otherwise>
+              <call id="a13" endpoint="" a:alt_id="sid-E5471AD9-8669-499B-A1AA-8F0D364DD560">
+                <parameters>
+                  <label>Request if breached data has to be communicated to the data subject</label>
+                  <method/>
+                  <arguments/>
+                </parameters>
+              </call>
+              <call id="a17" endpoint="" a:alt_id="sid-7E9D1CDE-4213-49D9-9BC1-335BB1D0D1BA">
+                <parameters>
+                  <label>Receive notification for the request</label>
+                  <method/>
+                  <arguments/>
+                </parameters>
+              </call>
+              <choose mode="exclusive" a:alt_id="sid-9BDEF5A3-5627-499F-A554-536D66314F34">
+                <alternative condition="">
+                  <call id="a18" endpoint="" a:alt_id="sid-79CCF0F8-CF7E-41E3-948F-CB884C73584F">
+                    <parameters>
+                      <label>Send notification</label>
+                      <method/>
+                      <arguments/>
+                    </parameters>
+                  </call>
+                </alternative>
+                <otherwise/>
+              </choose>
+            </otherwise>
+          </choose>
+        </otherwise>
+      </choose>
+    </parallel_branch>
+  </parallel>
+</description>

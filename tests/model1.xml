@@ -1,0 +1,214 @@
+<description xmlns="http://cpee.org/ns/description/1.0">
+  <call id="a1" endpoint="">
+    <parameters>
+      <label>Submit expense report</label>
+      <color/>
+      <method>:post</method>
+      <arguments/>
+    </parameters>
+    <code>
+      <signal/>
+      <prepare/>
+      <finalize output="result"/>
+      <update output="result"/>
+      <rescue output="result"/>
+    </code>
+    <annotations>
+      <_generic/>
+      <_logging_behavior>
+        <_exclude/>
+        <_include/>
+      </_logging_behavior>
+      <_timing>
+        <_timing_weight/>
+        <_timing_avg/>
+        <explanations/>
+      </_timing>
+      <_shifting>
+        <_shifting_type>Duration</_shifting_type>
+      </_shifting>
+      <_context_data_analysis>
+        <probes/>
+        <ips/>
+      </_context_data_analysis>
+      <report>
+        <url/>
+      </report>
+      <_notes>
+        <_notes_general/>
+      </_notes>
+    </annotations>
+    <documentation>
+      <input/>
+      <output/>
+      <implementation>
+        <description/>
+      </implementation>
+      <code>
+        <description/>
+      </code>
+    </documentation>
+  </call>
+  <choose eid="e1" mode="exclusive" label="">
+    <alternative eid="e2" condition="travel">
+      <_probability>
+        <_probability_min/>
+        <_probability_max/>
+        <_probability_avg/>
+      </_probability>
+      <call id="a3" endpoint="">
+        <parameters>
+          <label>Verify travel receipts</label>
+          <color/>
+          <method>:post</method>
+          <arguments/>
+        </parameters>
+        <code>
+          <signal/>
+          <prepare/>
+          <finalize output="result"/>
+          <update output="result"/>
+          <rescue output="result"/>
+        </code>
+        <annotations>
+          <_generic/>
+          <_logging_behavior>
+            <_exclude/>
+            <_include/>
+          </_logging_behavior>
+          <_timing>
+            <_timing_weight/>
+            <_timing_avg/>
+            <explanations/>
+          </_timing>
+          <_shifting>
+            <_shifting_type>Duration</_shifting_type>
+          </_shifting>
+          <_context_data_analysis>
+            <probes/>
+            <ips/>
+          </_context_data_analysis>
+          <report>
+            <url/>
+          </report>
+          <_notes>
+            <_notes_general/>
+          </_notes>
+        </annotations>
+        <documentation>
+          <input/>
+          <output/>
+          <implementation>
+            <description/>
+          </implementation>
+          <code>
+            <description/>
+          </code>
+        </documentation>
+      </call>
+    </alternative>
+    <otherwise>
+      <call id="a4" endpoint="">
+        <parameters>
+          <label>Verify office receipts</label>
+          <color/>
+          <method>:post</method>
+          <arguments/>
+        </parameters>
+        <code>
+          <signal/>
+          <prepare/>
+          <finalize output="result"/>
+          <update output="result"/>
+          <rescue output="result"/>
+        </code>
+        <annotations>
+          <_generic/>
+          <_logging_behavior>
+            <_exclude/>
+            <_include/>
+          </_logging_behavior>
+          <_timing>
+            <_timing_weight/>
+            <_timing_avg/>
+            <explanations/>
+          </_timing>
+          <_shifting>
+            <_shifting_type>Duration</_shifting_type>
+          </_shifting>
+          <_context_data_analysis>
+            <probes/>
+            <ips/>
+          </_context_data_analysis>
+          <report>
+            <url/>
+          </report>
+          <_notes>
+            <_notes_general/>
+          </_notes>
+        </annotations>
+        <documentation>
+          <input/>
+          <output/>
+          <implementation>
+            <description/>
+          </implementation>
+          <code>
+            <description/>
+          </code>
+        </documentation>
+      </call>
+    </otherwise>
+  </choose>
+  <call id="a2" endpoint="">
+    <parameters>
+      <label>Approve reimbursement</label>
+      <color/>
+      <method>:post</method>
+      <arguments/>
+    </parameters>
+    <code>
+      <signal/>
+      <prepare/>
+      <finalize output="result"/>
+      <update output="result"/>
+      <rescue output="result"/>
+    </code>
+    <annotations>
+      <_generic/>
+      <_logging_behavior>
+        <_exclude/>
+        <_include/>
+      </_logging_behavior>
+      <_timing>
+        <_timing_weight/>
+        <_timing_avg/>
+        <explanations/>
+      </_timing>
+      <_shifting>
+        <_shifting_type>Duration</_shifting_type>
+      </_shifting>
+      <_context_data_analysis>
+        <probes/>
+        <ips/>
+      </_context_data_analysis>
+      <report>
+        <url/>
+      </report>
+      <_notes>
+        <_notes_general/>
+      </_notes>
+    </annotations>
+    <documentation>
+      <input/>
+      <output/>
+      <implementation>
+        <description/>
+      </implementation>
+      <code>
+        <description/>
+      </code>
+    </documentation>
+  </call>
+</description>
+

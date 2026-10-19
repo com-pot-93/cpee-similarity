@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<description xmlns="http://cpee.org/ns/description/1.0" xmlns:a="http://cpee.org/ns/annotation/1.0">
+  <call id="a1" endpoint="" a:alt_id="1">
+    <parameters>
+      <label>Retrieve breached data</label>
+      <method/>
+      <type>:task</type>
+      <arguments/>
+    </parameters>
+  </call>
+  <call id="a3" endpoint="" a:alt_id="2">
+    <parameters>
+      <label>Retrieve breached subjects</label>
+      <method/>
+      <type>:task</type>
+      <arguments/>
+    </parameters>
+  </call>
+  <parallel wait="-1" cancel="last" a:alt_id="3">
+    <parallel_branch>
+      <call id="a7" endpoint="" a:alt_id="4">
+        <parameters>
+          <label>Data loss limitation</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+    </parallel_branch>
+    <parallel_branch>
+      <call id="a9" endpoint="" a:alt_id="5">
+        <parameters>
+          <label>Notify national authority</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+    </parallel_branch>
+  </parallel>
+  <call id="a15" endpoint="" a:alt_id="7">
+    <parameters>
+      <label>Evaluate stolen data</label>
+      <method/>
+      <type>:task</type>
+      <arguments/>
+    </parameters>
+  </call>
+  <choose mode="exclusive" a:alt_id="8">
+    <alternative condition="Yes" language="text/javascript">
+      <call id="a19" endpoint="" a:alt_id="9">
+        <parameters>
+          <label>Send notification</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+    </alternative>
+    <alternative condition="No" language="text/javascript">
+      <call id="a21" endpoint="" a:alt_id="10">
+        <parameters>
+          <label>Evaluate security standard</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+    </alternative>
+  </choose>
+  <choose mode="exclusive" a:alt_id="12">
+    <alternative condition="Yes" language="text/javascript">
+      <call id="a29" endpoint="" a:alt_id="13">
+        <parameters>
+          <label>Send notification</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+    </alternative>
+    <alternative condition="No" language="text/javascript">
+      <call id="a31" endpoint="" a:alt_id="14">
+        <parameters>
+          <label>Request if breached data has to be communicated to the data subject</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+    </alternative>
+  </choose>
+  <call id="a37" endpoint="" a:alt_id="16">
+    <parameters>
+      <label>Receive notification for the request</label>
+      <method/>
+      <type>:task</type>
+      <arguments/>
+    </parameters>
+  </call>
+  <choose mode="exclusive" a:alt_id="17">
+    <alternative condition="Yes" language="text/javascript">
+      <call id="a41" endpoint="" a:alt_id="18">
+        <parameters>
+          <label>Send notification</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+    </alternative>
+    <alternative condition="No" language="text/javascript"/>
+  </choose>
+</description>

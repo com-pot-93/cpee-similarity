@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<description xmlns="http://cpee.org/ns/description/1.0" xmlns:a="http://cpee.org/ns/annotation/1.0">
+  <choose mode="exclusive" a:alt_id="1">
+    <alternative condition="">
+      <call id="a3" endpoint="" a:alt_id="2">
+        <parameters>
+          <label>Select Underwriters</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+      <call id="a7" endpoint="" a:alt_id="3">
+        <parameters>
+          <label>Prepare Registration Statement</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+      <call id="a9" endpoint="" a:alt_id="4">
+        <parameters>
+          <label>Check Issue Compliance</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+      <parallel wait="-1" cancel="last" a:alt_id="5">
+        <parallel_branch>
+          <call id="a13" endpoint="" a:alt_id="6">
+            <parameters>
+              <label>Confirm Issue Price</label>
+              <method/>
+              <type>:task</type>
+              <arguments/>
+            </parameters>
+          </call>
+        </parallel_branch>
+        <parallel_branch>
+          <call id="a15" endpoint="" a:alt_id="7">
+            <parameters>
+              <label>Arrange Road Show</label>
+              <method/>
+              <type>:task</type>
+              <arguments/>
+            </parameters>
+          </call>
+        </parallel_branch>
+      </parallel>
+      <call id="a21" endpoint="" a:alt_id="9">
+        <parameters>
+          <label>Receive SEC Clearance</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+      <call id="a23" endpoint="" a:alt_id="10">
+        <parameters>
+          <label>Fix Issue Price</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+      <call id="a25" endpoint="" a:alt_id="11">
+        <parameters>
+          <label>Enter Firm Commitment</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+    </alternative>
+    <alternative condition="Condition Not Met" language="text/javascript">
+      <call id="a5" endpoint="" a:alt_id="14">
+        <parameters>
+          <label>Offer Stock to Public</label>
+          <method/>
+          <type>:task</type>
+          <arguments/>
+        </parameters>
+      </call>
+    </alternative>
+  </choose>
+</description>
