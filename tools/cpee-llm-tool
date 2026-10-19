@@ -1,0 +1,32 @@
+#!/usr/bin/ruby
+require 'riddl/client'
+require 'json'
+require 'typhoeus'
+
+# ./cpee-llm-tool.rb [new|adapt] [user_input] [instance_id] [llm] - last one (i.e., 'llm' is optional and default to 'geminin-2.5-flash-lite')
+
+# e.g.,
+# ./cpee-llm-tool.rb new 'The MPON sends the dismissal to the MPOO. The MPOO reviews the dismissal. The MPOO opposes the dismissal of MPON or the MPOO confirms the dismissal of the MPON.' 'geminin-2.0-flash' 1501
+# ./cpee-llm-tool.rb adapt 'Add task A after dismissal review.' 'geminin-2.0-flash' 1501
+
+
+srv = Riddl::Client.new('http://localhost:9297/')
+status, res = srv.post [
+  Riddl::Parameter::Complex.new("rpst_xml","text/xml",ARGV[0] == 'adapt' ? Typhoeus.get("https://cpee.org/flow/engine/#{ARGV[2]}/properties/dslx/").response_body() : File.read('cpee_empty_example')),
+  Riddl::Parameter::Complex.new("user_input","text/plain",ARGV[1]),
+  Riddl::Parameter::Complex.new("llm","text/plain",ARGV[3].nil?() ? 'gemini-2.5-flash-light' : ARGV[3])
+]
+if status >= 200 && status < 300
+  res
+else
+  raise "llm did not work"
+end
+description = JSON.parse(res[0].value().read())['output_cpee']
+
+srv = Riddl::Client.new("https://cpee.org/flow/engine/#{ARGV[2]}/properties/dslx/")
+status, res = srv.put [
+  Riddl::Parameter::Complex.new("dslx","text/xml",description)
+]
+if status >= 200 && status < 300
+  res
+end

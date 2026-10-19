@@ -1,0 +1,20 @@
+<description datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" xmlns="http://riddl.org/ns/description/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <message name="similarity_in">
+    <parameter name="rpst_xml_a" mimetype="text/xml"/>
+    <parameter name="rpst_xml_b" mimetype="text/xml"/>
+    <parameter name="sim_type" mimetype="text/plain"/>
+    <optional>
+      <parameter name="threshold" mimetype="text/plain"/>
+    </optional>
+  </message>
+  <message name="similarity_out">
+    <parameter name="similarity" mimetype="application/json"/>
+  </message>
+
+  <resource>
+    <get in="similarity_in" out="similarity_out"/>
+  </resource>
+
+</description>
+
