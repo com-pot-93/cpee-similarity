@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<description xmlns="http://cpee.org/ns/description/1.0" xmlns:a="http://cpee.org/ns/annotation/1.0">
+  <call id="a1" endpoint="" a:alt_id="1">
+    <parameters>
+      <label>Receive Invoice</label>
+      <method/>
+      <arguments/>
+    </parameters>
+  </call>
+  <call id="a3" endpoint="" a:alt_id="2">
+    <parameters>
+      <label>Create Invoice Instance</label>
+      <method/>
+      <arguments/>
+    </parameters>
+  </call>
+  <call id="a5" endpoint="" a:alt_id="3">
+    <parameters>
+      <label>Check Items and Create Docket</label>
+      <method/>
+      <arguments/>
+    </parameters>
+  </call>
+  <loop mode="pre_test" condition="true" eid="e1">
+    <call id="a9" endpoint="" a:alt_id="5">
+      <parameters>
+        <label>Send to Cost Center Manager</label>
+        <method/>
+        <arguments/>
+      </parameters>
+    </call>
+    <call id="a11" endpoint="" a:alt_id="6">
+      <parameters>
+        <label>Review Invoice Items</label>
+        <method/>
+        <arguments/>
+      </parameters>
+    </call>
+    <choose label="{x}" mode="exclusive" a:alt_id="7" eid="e2">
+      <alternative condition="Inconsistent" eid="e3" language="text/x-ruby">
+        <call id="a15" endpoint="" a:alt_id="8">
+          <parameters>
+            <label>Reject and Return to Accounting</label>
+            <method/>
+            <arguments/>
+          </parameters>
+        </call>
+        <call id="a19" endpoint="" a:alt_id="10">
+          <parameters>
+            <label>Clarify with Vendor</label>
+            <method/>
+            <arguments/>
+          </parameters>
+        </call>
+      </alternative>
+      <otherwise eid="e4">
+        <choose label="{x}" mode="exclusive" a:alt_id="11" eid="e5">
+          <alternative condition="More Managers" eid="e6" language="text/x-ruby">
+            <call id="a10" endpoint="" a:alt_id="5">
+              <parameters>
+                <label>Send to Cost Center Manager</label>
+                <method/>
+                <arguments/>
+              </parameters>
+            </call>
+          </alternative>
+          <otherwise eid="e7">
+            <call id="a27" endpoint="" a:alt_id="12">
+              <parameters>
+                <label>Forward to Commercial Manager</label>
+                <method/>
+                <arguments/>
+              </parameters>
+            </call>
+            <call id="a29" endpoint="" a:alt_id="13">
+              <parameters>
+                <label>Perform Commercial Audit</label>
+                <method/>
+                <arguments/>
+              </parameters>
+            </call>
+            <choose label="{x}" mode="exclusive" a:alt_id="14" eid="e8">
+              <alternative condition="Complaint" eid="e9" language="text/x-ruby">
+                <call id="a33" endpoint="" a:alt_id="15">
+                  <parameters>
+                    <label>Resolve Complaint with Vendor</label>
+                    <method/>
+                    <arguments/>
+                  </parameters>
+                </call>
+                <call id="a30" endpoint="" a:alt_id="13">
+                  <parameters>
+                    <label>Perform Commercial Audit</label>
+                    <method/>
+                    <arguments/>
+                  </parameters>
+                </call>
+              </alternative>
+              <alternative condition="Approved" eid="e10" language="text/x-ruby">
+                <choose label="{x}" mode="exclusive" a:alt_id="17" eid="e11">
+                  <alternative condition="Amount &gt; 20 EUR" eid="e12" language="text/x-ruby">
+                    <call id="a41" endpoint="" a:alt_id="18">
+                      <parameters>
+                        <label>Board Review</label>
+                        <method/>
+                        <arguments/>
+                      </parameters>
+                    </call>
+                  </alternative>
+                  <alternative condition="Amount &lt;= 20 EUR" eid="e13" language="text/x-ruby"/>
+                </choose>
+                <call id="a47" endpoint="" a:alt_id="20">
+                  <parameters>
+                    <label>Give Payment Instructions</label>
+                    <method/>
+                    <arguments/>
+                  </parameters>
+                </call>
+                <call id="a49" endpoint="" a:alt_id="21">
+                  <parameters>
+                    <label>Close Instance</label>
+                    <method/>
+                    <arguments/>
+                  </parameters>
+                </call>
+              </alternative>
+            </choose>
+          </otherwise>
+        </choose>
+        <escape a:alt_id="-1"/>
+      </otherwise>
+    </choose>
+  </loop>
+</description>
