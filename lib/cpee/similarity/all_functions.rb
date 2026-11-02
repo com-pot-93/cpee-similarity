@@ -130,6 +130,12 @@ def create_sim_matrix(short,long)
   return sim_matrix
 end
 
+SENTENCE_ENDINGS = /(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|\!)\s|[.?!](?=[A-Z]|"|')/
+
+def split_and_clean(text)
+  text.split(SENTENCE_ENDINGS).map(&:strip).select{ |s| s.length > 1 }
+end
+
 def create_lev_matrix(nshort,nlong)
   lev_matrix = []
   nshort.each do |s|

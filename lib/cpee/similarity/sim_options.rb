@@ -182,5 +182,46 @@ module SimOptions
     scores.merge!(sim)
     return scores[:overall], scores
   end
+
+  # each task picks its best matching sentence, the task is matched if that score is at or above the threshold
+  # and the picked sentence counts as matched (once, however many tasks pick it)
+  def calculate_text_model_similarity(text,doc,threshold)
+    sentences = split_and_clean(text)
+    begin
+      tasks = process_model_elements(doc)[:task_names]
+    rescue Timeout::Error => e
+      raise "Timeout error!!!"
+    end
+    raise "the text does not have sentences" if sentences.empty?
+    raise "the model does not have tasks" if tasks.empty?
+
+    sim_matrix = create_sim_matrix(tasks.each_with_index.to_h{ |t,i| [i,t] }, sentences.each_with_index.to_h{ |s,i| [i,s] })
+    matched_tasks = 0
+    matched_sentences = []
+    sim_matrix.each do |row|
+      if row.max >= threshold
+        matched_tasks += 1
+        matched_sentences << row.index(row.max)
+      end
+    end
+
+    relevance = matched_sentences.uniq.length.to_f/sentences.length
+    truthfulness = matched_tasks.to_f/tasks.length
+    return relevance, truthfulness
+  end
+
+  # recall: matched sentences / sentences
+  def relevance_similarity(text,doc,threshold=0.65)
+    threshold = threshold.nil? ? 0.65 : threshold.to_f
+    relevance, truthfulness = calculate_text_model_similarity(text,doc,threshold)
+    return relevance, truthfulness
+  end
+
+  # precision: matched tasks / tasks
+  def truthfulness_similarity(text,doc,threshold=0.65)
+    threshold = threshold.nil? ? 0.65 : threshold.to_f
+    relevance, truthfulness = calculate_text_model_similarity(text,doc,threshold)
+    return truthfulness, relevance
+  end
 end
 

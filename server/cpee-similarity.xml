@@ -8,12 +8,23 @@
       <parameter name="threshold" mimetype="text/plain"/>
     </optional>
   </message>
+  <message name="text_in">
+    <parameter name="text" mimetype="text/plain"/>
+    <parameter name="rpst_xml" mimetype="text/xml"/>
+    <parameter name="sim_type" mimetype="text/plain"/>
+    <optional>
+      <parameter name="threshold" mimetype="text/plain"/>
+    </optional>
+  </message>
   <message name="similarity_out">
     <parameter name="similarity" mimetype="application/json"/>
   </message>
 
   <resource>
     <get in="similarity_in" out="similarity_out"/>
+    <resource relative="text">
+      <get in="text_in" out="similarity_out"/>
+    </resource>
   </resource>
 
 </description>

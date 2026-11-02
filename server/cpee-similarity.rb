@@ -35,12 +35,39 @@ class Similarity < Riddl::Implementation #{{{
   end
 end #}}}
 
+class TextSimilarity < Riddl::Implementation #{{{
+  include SimOptions
+  SIM_TYPES = %w(relevance truthfulness)
+
+  def response
+    #get parameters
+    begin
+      text = @p[0].value.read
+      input_cpee = @p[1].value.read
+      sim_type = @p[2].value.read.strip
+      threshold = @p[3]&.value&.read
+      raise "unknown sim_type '#{sim_type}', use one of: #{SIM_TYPES.join(', ')}" unless SIM_TYPES.include?(sim_type)
+    rescue Exception => e
+      @status = 400
+      return Riddl::Parameter::Complex.new("similarity_out","application/json",{:error => e}.to_json())
+    end
+
+    similarity = send("#{sim_type}_similarity".to_sym,text,input_cpee,threshold)[0]
+
+    return(Riddl::Parameter::Complex.new("similarity_out","application/json",{:sim_type => sim_type, :similarity => similarity}.to_json()))
+  end
+end #}}}
+
 Riddl::Server.new(File.dirname(__FILE__) + '/cpee-similarity.xml', :port => 9325) do
   accessible_description true
   cross_site_xhr true
 
   on resource do
     run Similarity if get 'similarity_in'
+
+    on resource 'text' do
+      run TextSimilarity if get 'text_in'
+    end
   end
 end.loop!
 
